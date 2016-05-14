@@ -3,25 +3,6 @@ package business.wrappers;
 import java.util.Date;
 
 public class SmartphoneWrapper {
-
-    /*
-     *  modelName : "",
-        brandName : "",
-        releaseDate : null,
-        screenSize : 0,
-        resolutionX : 0,
-        resolutionY : 0,
-        ram : 0,
-        rom : 0,
-        battery : 0,
-        weight : 0,
-        height : 0,
-        width : 0,
-        thickness : 0,
-        gps : false,
-        nfc : false,
-        bluetooth : false
-     */
     
     private String modelName;
     private String brandName;

@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class SmartphoneWrapper {
     
+    private int id;
     private String modelName;
     private String brandName;
     private Date releaseDate;
@@ -24,6 +25,33 @@ public class SmartphoneWrapper {
     public SmartphoneWrapper() {
         super();
     }
+    
+    
+
+    public SmartphoneWrapper(int id, String modelName, String brandName, Date releaseDate, double screenSize, int resolutionX,
+            int resolutionY, int ram, int rom, int battery, double weight, double height, double width, double thickness, boolean gps,
+            boolean nfc, boolean bluetooth) {
+        super();
+        this.id = id;
+        this.modelName = modelName;
+        this.brandName = brandName;
+        this.releaseDate = releaseDate;
+        this.screenSize = screenSize;
+        this.resolutionX = resolutionX;
+        this.resolutionY = resolutionY;
+        this.ram = ram;
+        this.rom = rom;
+        this.battery = battery;
+        this.weight = weight;
+        this.height = height;
+        this.width = width;
+        this.thickness = thickness;
+        this.gps = gps;
+        this.nfc = nfc;
+        this.bluetooth = bluetooth;
+    }
+
+
 
     public String getModelName() {
         return modelName;
@@ -153,6 +181,14 @@ public class SmartphoneWrapper {
         this.bluetooth = bluetooth;
     }
     
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "SmartphoneWrapper [modelName=" + modelName + ", brandName=" + brandName + ", releaseDate=" + releaseDate + ", screenSize="

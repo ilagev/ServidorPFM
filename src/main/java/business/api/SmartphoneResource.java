@@ -25,9 +25,9 @@ public class SmartphoneResource {
     }
     
     @RequestMapping(method = RequestMethod.POST)
-    public void createSmartphone(@RequestBody SmartphoneWrapper smartphoneWrapper) {
+    public SmartphoneWrapper createSmartphone(@RequestBody SmartphoneWrapper smartphoneWrapper) {
         System.out.println(smartphoneWrapper.toString());
-        smartphoneController.create(smartphoneWrapper);
+        return smartphoneController.create(smartphoneWrapper);
     }
     
     @RequestMapping(method = RequestMethod.GET, value = Uris.ID)

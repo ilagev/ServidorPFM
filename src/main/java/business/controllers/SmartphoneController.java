@@ -20,8 +20,9 @@ public class SmartphoneController {
         this.smartphoneDao = smartphoneDao;
     }
     
-    public void create(SmartphoneWrapper smartphoneWrapper) {
-        smartphoneDao.save(this.getSmartphoneEntity(smartphoneWrapper));
+    public SmartphoneWrapper create(SmartphoneWrapper smartphoneWrapper) {
+        return this.getSmartphoneWrapper(smartphoneDao.save(this.getSmartphoneEntity(smartphoneWrapper)));
+        
     }
 
     public SmartphoneWrapper getSmartphone(int id) {

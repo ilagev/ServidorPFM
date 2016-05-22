@@ -13,5 +13,7 @@ public class ResourceNames {
     public static final String ENTITIES = "data.entities";
 
     public static final String DAOS = "data.daos";
+    
+    public static final String SERVICES = "data.services";
 
 }

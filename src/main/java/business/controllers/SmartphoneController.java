@@ -110,4 +110,23 @@ public class SmartphoneController {
         this.smartphoneDao.delete(smartphoneDao.findById(id));
     }
 
+    public boolean existsSmartphone(String brandName, String modelName, Integer id) {
+        if (id == null) {
+            return this.smartphoneDao.findSmartphoneByModelNameAndBrandName(modelName, brandName) != null;
+        } else if (this.hasModelOrBrandChanged(brandName, modelName, id)) {
+            return this.smartphoneDao.findSmartphoneByModelNameAndBrandName(modelName, brandName) != null;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean hasModelOrBrandChanged(String brandName, String modelName, Integer id) {
+        Smartphone smartphoneFromForm = this.smartphoneDao.findSmartphoneByModelNameAndBrandName(modelName, brandName);
+        return smartphoneFromForm == null || smartphoneFromForm.getId() != id;
+    }
+
+    public boolean existsSmartphone(int id) {
+        return this.smartphoneDao.findById(id) != null;
+    }
+
 }

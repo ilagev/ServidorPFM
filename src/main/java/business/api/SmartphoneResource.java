@@ -26,7 +26,6 @@ public class SmartphoneResource {
     
     @RequestMapping(method = RequestMethod.POST)
     public SmartphoneWrapper createSmartphone(@RequestBody SmartphoneWrapper smartphoneWrapper) {
-        System.out.println(smartphoneWrapper.toString());
         return smartphoneController.create(smartphoneWrapper);
     }
     
@@ -38,6 +37,17 @@ public class SmartphoneResource {
     @RequestMapping(method = RequestMethod.GET)
     public List<SmartphoneWrapper> searchSmartphones(@RequestParam("query") String modelOrBrand) {
         return smartphoneController.findSmartphones(modelOrBrand);
+    }
+    
+    @RequestMapping(method = RequestMethod.PUT, value = Uris.ID)
+    public SmartphoneWrapper updateSmartphone(@RequestBody SmartphoneWrapper smartphoneWrapper, @PathVariable int id) {
+        System.out.println(id);
+        return smartphoneController.updateSmartphone(smartphoneWrapper, id);
+    }
+    
+    @RequestMapping(method = RequestMethod.DELETE, value = Uris.ID)
+    public void removeSmartphone(@PathVariable int id) {
+        smartphoneController.removeSmartphone(id);
     }
 
 }

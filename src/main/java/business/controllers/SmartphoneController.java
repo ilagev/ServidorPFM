@@ -83,4 +83,31 @@ public class SmartphoneController {
                 smartphoneWrapper.isBluetooth());
     }
 
+    public SmartphoneWrapper updateSmartphone(SmartphoneWrapper smartphoneWrapper, int id) {
+        Smartphone smartphoneEntity = this.smartphoneDao.findById(id);
+        smartphoneEntity.setModelName(smartphoneWrapper.getModelName());
+        smartphoneEntity.setBrandName(smartphoneWrapper.getBrandName());
+        smartphoneEntity.setReleaseDate(smartphoneWrapper.getReleaseDate());
+        smartphoneEntity.setScreenSize(smartphoneWrapper.getScreenSize());
+        smartphoneEntity.setResolutionX(smartphoneWrapper.getResolutionX());
+        smartphoneEntity.setResolutionY(smartphoneWrapper.getResolutionY());
+        smartphoneEntity.setRam(smartphoneWrapper.getRam());
+        smartphoneEntity.setRom(smartphoneWrapper.getRom());
+        smartphoneEntity.setBattery(smartphoneWrapper.getBattery());
+        smartphoneEntity.setWeight(smartphoneWrapper.getWeight());
+        smartphoneEntity.setHeight(smartphoneWrapper.getHeight());
+        smartphoneEntity.setWidth(smartphoneWrapper.getWidth());
+        smartphoneEntity.setThickness(smartphoneWrapper.getThickness());
+        smartphoneEntity.setGps(smartphoneWrapper.isGps());
+        smartphoneEntity.setNfc(smartphoneWrapper.isNfc());
+        smartphoneEntity.setBluetooth(smartphoneWrapper.isBluetooth());
+        
+        this.smartphoneDao.save(smartphoneEntity);
+        return this.getSmartphoneWrapper(smartphoneEntity);
+    }
+
+    public void removeSmartphone(int id) {
+        this.smartphoneDao.delete(smartphoneDao.findById(id));
+    }
+
 }

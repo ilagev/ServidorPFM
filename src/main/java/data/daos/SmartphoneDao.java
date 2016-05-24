@@ -13,4 +13,5 @@ public interface SmartphoneDao extends JpaRepository<Smartphone, Integer> {
     @Query("select smartphone from Smartphone smartphone where lower(smartphone.modelName) LIKE CONCAT('%',:modelOrBrand,'%') or lower(smartphone.brandName) LIKE CONCAT('%',:modelOrBrand,'%')")
     List<Smartphone> findSmartphoneByModelNameOrBrandName(@Param("modelOrBrand") String modelOrBrand);
     
+    Smartphone findById(int id);
 }

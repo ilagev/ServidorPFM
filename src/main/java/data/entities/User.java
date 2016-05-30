@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 @Entity
 public class User {
     
@@ -17,6 +19,7 @@ public class User {
     private String mail;
     private int level;
     private int karma;
+    private Role role;
     
     @OneToOne
     private Smartphone smartphone;
@@ -25,6 +28,17 @@ public class User {
         
     }
     
+    public User(String nick, String password, String mail) {
+        super();
+        this.nick = nick;
+        this.password = new BCryptPasswordEncoder().encode(password);
+        this.mail = mail;
+        this.level = 0;
+        this.karma = 0;
+        this.role = Role.USER;
+        this.smartphone = null;
+    }
+
     public int getId() {
         return id;
     }
@@ -79,6 +93,14 @@ public class User {
 
     public void setSmartphone(Smartphone smartphone) {
         this.smartphone = smartphone;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
     
     

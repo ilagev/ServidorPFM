@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import config.ResourceNames;
 import data.daos.SmartphoneDao;
+import data.daos.UserDao;
 import data.entities.Smartphone;
+import data.entities.User;
 
 @Service
 @Transactional
@@ -20,6 +22,9 @@ public class Populate {
     
     @Autowired
     private SmartphoneDao smartphoneDao;
+    
+    @Autowired
+    private UserDao userDao;
     
     @PostConstruct
     public void createSmartphones() {
@@ -58,8 +63,12 @@ public class Populate {
         Smartphone hp9 = new Smartphone("Lite P9", "Huawei", c.getTime(), 5.5, 1480, 1260, 2, 32, 2500,
                                          134, 122.6, 75.4, 9.0, false, true, false);
         smartphoneDao.save(hp9);
-        
-        
+    }
+    
+    @PostConstruct
+    public void createUsers() {
+        User user = new User("pedro", "pedro", "pedro@pedro.com");
+        this.userDao.save(user);
     }
 
 }

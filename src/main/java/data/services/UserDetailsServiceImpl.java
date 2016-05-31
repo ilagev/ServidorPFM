@@ -29,11 +29,10 @@ public class UserDetailsServiceImpl implements UserDetailsService{
     public UserDetails loadUserByUsername(final String usernameOrToken) throws UsernameNotFoundException {
         User user = userDao.findByTokenValue(usernameOrToken);
         if (user != null) {
-            return this.userBuilder(user.getNick(),  new BCryptPasswordEncoder().encode(""), user.getRole());
+            return this.userBuilder(user.getNick(), new BCryptPasswordEncoder().encode(""), user.getRole());
         } else {
             user = userDao.findByNick(usernameOrToken);
             if (user != null) {
-                System.out.println(user.getNick());
                 return this.userBuilder(user.getNick(), user.getPassword(), user.getRole());
             } else {
                 throw new UsernameNotFoundException("Usuario no encontrado");

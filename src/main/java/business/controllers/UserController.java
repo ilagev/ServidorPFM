@@ -32,5 +32,21 @@ public class UserController {
             user.getRole()
         );
     }
+    
+    private User getUserEntity(UserWrapper userWrapper) {
+        return new User(
+            userWrapper.getNick(),
+            userWrapper.getPassword(),
+            userWrapper.getMail()
+        );
+    }
+
+    public boolean existsUser(String nick, String mail) {
+        return (userDao.findByNick(nick) != null) || (userDao.findByMail(mail) != null);
+    }
+
+    public UserWrapper create(UserWrapper userWrapper) {
+        return this.getUserWrapper(userDao.save(this.getUserEntity(userWrapper)));
+    }
 
 }

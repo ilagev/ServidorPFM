@@ -11,5 +11,7 @@ public class Uris {
     public static final String TOKENS = "/tokens";
     
     public static final String USERS = "/users";
+    
+    public static final String LOGGED_IN = "/loggedin";
 
 }

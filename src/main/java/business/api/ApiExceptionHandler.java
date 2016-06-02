@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import business.api.exceptions.AlreadyExistSmartphoneException;
+import business.api.exceptions.AlreadyExistsUserException;
 import business.api.exceptions.ApiException;
 import business.api.exceptions.ErrorMessage;
 import business.api.exceptions.NotFoundSmartphoneException;
@@ -23,7 +24,7 @@ public class ApiExceptionHandler {
     }
     
     @ResponseStatus(HttpStatus.CONFLICT)
-    @ExceptionHandler({AlreadyExistSmartphoneException.class})
+    @ExceptionHandler({AlreadyExistSmartphoneException.class, AlreadyExistsUserException.class})
     @ResponseBody
     public ErrorMessage conflictRequest(ApiException exception) {
         ErrorMessage apiErrorMessage = new ErrorMessage(exception);

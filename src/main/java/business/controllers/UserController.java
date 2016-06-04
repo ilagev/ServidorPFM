@@ -41,12 +41,28 @@ public class UserController {
         );
     }
 
+    public UserWrapper findUser(String nick, String mail) {
+        if (userDao.findByNick(nick) != null) {
+            return this.getUserWrapper(userDao.findByNick(nick));
+        } else if (userDao.findByMail(mail) != null) {
+            return this.getUserWrapper(userDao.findByMail(mail));
+        } else {
+            return null;
+        }
+    }
+    
     public boolean existsUser(String nick, String mail) {
         return (userDao.findByNick(nick) != null) || (userDao.findByMail(mail) != null);
     }
 
     public UserWrapper create(UserWrapper userWrapper) {
         return this.getUserWrapper(userDao.save(this.getUserEntity(userWrapper)));
+    }
+
+    public UserWrapper updatePassword(String username, String newPassword) {
+        User user = userDao.findByNick(username);
+        user.setPassword(newPassword);
+        return this.getUserWrapper(userDao.save(user));
     }
 
 }

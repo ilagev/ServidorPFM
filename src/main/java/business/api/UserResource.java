@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import business.api.exceptions.AlreadyExistsUserException;
+import business.api.exceptions.UserNotFoundException;
 import business.controllers.UserController;
+import business.wrappers.PasswordWrapper;
 import business.wrappers.UserWrapper;
 
 @RestController
@@ -30,8 +32,12 @@ public class UserResource {
     }
     
     @RequestMapping(method = RequestMethod.GET)
-    public boolean existsUser(@RequestParam(value = "nick", required = false) String nick, @RequestParam(value = "mail", required = false) String mail) {
-        return userController.existsUser(nick, mail);
+    public UserWrapper findUser(@RequestParam(value = "nick", required = false) String nick, @RequestParam(value = "mail", required = false) String mail) throws UserNotFoundException {
+        if (userController.existsUser(nick, mail)) {
+            return userController.findUser(nick, mail);
+        } else {
+            throw new UserNotFoundException("No existe el user " + nick + " con mail " + mail);
+        }
     }
     
     @RequestMapping(method = RequestMethod.POST)
@@ -41,6 +47,11 @@ public class UserResource {
         } else {
             throw new AlreadyExistsUserException("Ya existe el user " + userWrapper.getNick());
         }
+    }
+    
+    @RequestMapping(method = RequestMethod.PUT, value = Uris.LOGGED_IN + Uris.PASSWORD)
+    public UserWrapper updatePassword(@RequestBody PasswordWrapper password, @AuthenticationPrincipal User activeUser) {
+        return userController.updatePassword(activeUser.getUsername(), password.getNewp());
     }
     
 }

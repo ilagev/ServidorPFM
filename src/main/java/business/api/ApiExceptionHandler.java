@@ -11,12 +11,13 @@ import business.api.exceptions.AlreadyExistsUserException;
 import business.api.exceptions.ApiException;
 import business.api.exceptions.ErrorMessage;
 import business.api.exceptions.NotFoundSmartphoneException;
+import business.api.exceptions.UserNotFoundException;
 
 @ControllerAdvice
 public class ApiExceptionHandler {
     
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler({NotFoundSmartphoneException.class})
+    @ExceptionHandler({NotFoundSmartphoneException.class, UserNotFoundException.class})
     @ResponseBody
     public ErrorMessage notFoundRequest(ApiException exception) {
         ErrorMessage apiErrorMessage = new ErrorMessage(exception);

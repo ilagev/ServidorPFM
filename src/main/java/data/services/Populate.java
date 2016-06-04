@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import config.ResourceNames;
 import data.daos.SmartphoneDao;
 import data.daos.UserDao;
+import data.entities.Role;
 import data.entities.Smartphone;
 import data.entities.User;
 
@@ -69,6 +70,14 @@ public class Populate {
     public void createUsers() {
         User user = new User("pedro", "pedro", "pedro@pedro.com");
         this.userDao.save(user);
+        
+        User mod = new User("mod", "mod", "mod@mod.com");
+        mod.setRole(Role.MODERATOR);
+        this.userDao.save(mod);
+        
+        User admin = new User("admin", "admin", "admin@admin.com");
+        admin.setRole(Role.ADMIN);
+        this.userDao.save(admin);
     }
 
 }

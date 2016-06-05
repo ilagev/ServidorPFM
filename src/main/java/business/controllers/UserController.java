@@ -111,4 +111,13 @@ public class UserController {
         return this.getUserWrapper(user);
     }
 
+    public SmartphoneWrapper getSmartphoneOwned(String username) {
+        Smartphone smartphone = userDao.findByNick(username).getSmartphone();
+        if (smartphone == null) {
+            return null;
+        } else {
+            return smartphoneController.getSmartphoneWrapper(smartphone);
+        }
+    }
+
 }

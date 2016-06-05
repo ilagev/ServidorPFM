@@ -21,6 +21,8 @@ public class SmartphoneWrapper {
     private boolean gps;
     private boolean nfc;
     private boolean bluetooth;
+    private int creatorID;
+    private String creatorNick;
     
     public SmartphoneWrapper() {
         super();
@@ -30,7 +32,7 @@ public class SmartphoneWrapper {
 
     public SmartphoneWrapper(int id, String modelName, String brandName, Date releaseDate, double screenSize, int resolutionX,
             int resolutionY, int ram, int rom, int battery, double weight, double height, double width, double thickness, boolean gps,
-            boolean nfc, boolean bluetooth) {
+            boolean nfc, boolean bluetooth, int creatorID, String creatorNick) {
         super();
         this.id = id;
         this.modelName = modelName;
@@ -49,6 +51,8 @@ public class SmartphoneWrapper {
         this.gps = gps;
         this.nfc = nfc;
         this.bluetooth = bluetooth;
+        this.creatorID = creatorID;
+        this.creatorNick = creatorNick;
     }
 
 
@@ -187,6 +191,22 @@ public class SmartphoneWrapper {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getCreatorID() {
+        return creatorID;
+    }
+
+    public void setCreatorID(int creatorID) {
+        this.creatorID = creatorID;
+    }
+
+    public String getCreatorNick() {
+        return creatorNick;
+    }
+
+    public void setCreatorNick(String creatorNick) {
+        this.creatorNick = creatorNick;
     }
 
     @Override

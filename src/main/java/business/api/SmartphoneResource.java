@@ -3,6 +3,8 @@ package business.api;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,9 +29,9 @@ public class SmartphoneResource {
     }
     
     @RequestMapping(method = RequestMethod.POST)
-    public SmartphoneWrapper createSmartphone(@RequestBody SmartphoneWrapper smartphoneWrapper) throws AlreadyExistSmartphoneException {
+    public SmartphoneWrapper createSmartphone(@RequestBody SmartphoneWrapper smartphoneWrapper, @AuthenticationPrincipal User activeUser) throws AlreadyExistSmartphoneException {
         if (!smartphoneController.existsSmartphone(smartphoneWrapper.getBrandName(), smartphoneWrapper.getModelName(), null)) {
-            return smartphoneController.create(smartphoneWrapper);
+            return smartphoneController.create(smartphoneWrapper, activeUser.getUsername());
         } else {
             throw new AlreadyExistSmartphoneException("Ya existe el smartphone " + smartphoneWrapper.getBrandName() + " " + 
                                                                                smartphoneWrapper.getModelName());

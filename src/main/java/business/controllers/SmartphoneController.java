@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 
 import business.wrappers.SmartphoneWrapper;
 import data.daos.SmartphoneDao;
+import data.daos.UserDao;
 import data.entities.Smartphone;
 
 @Controller
@@ -20,9 +21,17 @@ public class SmartphoneController {
         this.smartphoneDao = smartphoneDao;
     }
     
-    public SmartphoneWrapper create(SmartphoneWrapper smartphoneWrapper) {
-        return this.getSmartphoneWrapper(smartphoneDao.save(this.getSmartphoneEntity(smartphoneWrapper)));
-        
+    private UserDao userDao;
+    
+    @Autowired
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+    
+    public SmartphoneWrapper create(SmartphoneWrapper smartphoneWrapper, String username) {
+        Smartphone smartphoneEntity = this.getSmartphoneEntity(smartphoneWrapper);
+        smartphoneEntity.setCreator(userDao.findByNick(username));
+        return this.getSmartphoneWrapper(smartphoneDao.save(smartphoneEntity));
     }
 
     public SmartphoneWrapper getSmartphone(int id) {
@@ -43,6 +52,7 @@ public class SmartphoneController {
     }
     
     private SmartphoneWrapper getSmartphoneWrapper (Smartphone smartphoneEntity) {
+        System.out.println(smartphoneEntity.getCreator().getNick());
         return new SmartphoneWrapper(
                 smartphoneEntity.getId(),
                 smartphoneEntity.getModelName(),
@@ -60,7 +70,9 @@ public class SmartphoneController {
                 smartphoneEntity.getThickness(),
                 smartphoneEntity.isGps(),
                 smartphoneEntity.isNfc(),
-                smartphoneEntity.isBluetooth());
+                smartphoneEntity.isBluetooth(),
+                smartphoneEntity.getCreator().getId(),
+                smartphoneEntity.getCreator().getNick());
     }
     
     private Smartphone getSmartphoneEntity (SmartphoneWrapper smartphoneWrapper) {

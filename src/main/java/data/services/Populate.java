@@ -28,56 +28,59 @@ public class Populate {
     private UserDao userDao;
     
     @PostConstruct
-    public void createSmartphones() {
+    public void populate() {
+        User user = new User("pedro", "pedro", "pedro@pedro.com");
+        user = this.userDao.save(user);
+        
+        User mod = new User("mod", "mod", "mod@mod.com");
+        mod.setRole(Role.MODERATOR);
+        mod = this.userDao.save(mod);
+        
+        User admin = new User("admin", "admin", "admin@admin.com");
+        admin.setRole(Role.ADMIN);
+        admin = this.userDao.save(admin);
+        
         Calendar c = Calendar.getInstance();
         c.set(2016, 3, 1);
         Smartphone sgs7 = new Smartphone("Galaxy S7", "Samsung", c.getTime(), 5.1, 1440, 1920, 4, 128, 3000,
                                          152, 142.4, 72.8, 6.7, true, true, true);
+        sgs7.setCreator(user);
         smartphoneDao.save(sgs7);
         
         c = Calendar.getInstance();
         c.set(2016, 3, 1);
         Smartphone sgs6 = new Smartphone("Galaxy S6", "Samsung", c.getTime(), 4.9, 1080, 1560, 3, 64, 2800,
                                          158, 142.6, 72.9, 6.8, true, false, true);
+        sgs6.setCreator(user);
         smartphoneDao.save(sgs6);
         
         c = Calendar.getInstance();
         c.set(2016, 2, 1);
         Smartphone htc9 = new Smartphone("M9", "HTC", c.getTime(), 4.7, 1280, 1560, 3, 64, 2860,
                                          105, 142.6, 72.9, 6.8, true, false, false);
+        htc9.setCreator(mod);
         smartphoneDao.save(htc9);
         
         c = Calendar.getInstance();
         c.set(2014, 2, 10);
         Smartphone htc10 = new Smartphone("M10", "HTC", c.getTime(), 5.5, 1080, 2000, 3, 16, 3100,
                                          120, 162.6, 75.9, 7.0, false, true, false);
+        htc10.setCreator(mod);
         smartphoneDao.save(htc10);
         
         c = Calendar.getInstance();
         c.set(2015, 6, 17);
         Smartphone z1 = new Smartphone("Zuk Z1", "Lenovo", c.getTime(), 5.5, 1780, 1200, 3, 128, 3500,
                                          130, 142.6, 75.4, 7.0, false, true, false);
+        z1.setCreator(mod);
         smartphoneDao.save(z1);
         
         c = Calendar.getInstance();
         c.set(2016, 2, 18);
         Smartphone hp9 = new Smartphone("Lite P9", "Huawei", c.getTime(), 5.5, 1480, 1260, 2, 32, 2500,
                                          134, 122.6, 75.4, 9.0, false, true, false);
+        hp9.setCreator(admin);
         smartphoneDao.save(hp9);
-    }
-    
-    @PostConstruct
-    public void createUsers() {
-        User user = new User("pedro", "pedro", "pedro@pedro.com");
-        this.userDao.save(user);
-        
-        User mod = new User("mod", "mod", "mod@mod.com");
-        mod.setRole(Role.MODERATOR);
-        this.userDao.save(mod);
-        
-        User admin = new User("admin", "admin", "admin@admin.com");
-        admin.setRole(Role.ADMIN);
-        this.userDao.save(admin);
     }
 
 }

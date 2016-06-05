@@ -17,4 +17,7 @@ public interface SmartphoneDao extends JpaRepository<Smartphone, Integer> {
     
     @Query("select smartphone from Smartphone smartphone where lower(smartphone.modelName) = lower(?1) and lower(smartphone.brandName) = lower(?2)")
     Smartphone findSmartphoneByModelNameAndBrandName(String modelName, String brandName);
+
+    @Query("select smartphone from Smartphone smartphone where smartphone.creator.id = ?1")
+    List<Smartphone> findByCreatorId(int id);
 }

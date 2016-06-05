@@ -1,8 +1,11 @@
 package business.api;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +17,7 @@ import business.api.exceptions.UserNotFoundException;
 import business.controllers.UserController;
 import business.wrappers.PasswordWrapper;
 import business.wrappers.UserWrapper;
+import business.wrappers.SmartphoneWrapper;;
 
 @RestController
 @RequestMapping(Uris.SERVLET_MAP + Uris.USERS)
@@ -29,6 +33,16 @@ public class UserResource {
     @RequestMapping(method = RequestMethod.GET, value = Uris.LOGGED_IN)
     public UserWrapper getUser(@AuthenticationPrincipal User activeUser) {
         return userController.getUser(activeUser.getUsername());
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, value = Uris.ID)
+    public UserWrapper getUser(@PathVariable int id) {
+        return userController.getUser(id);
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, value = Uris.ID + Uris.SMARTPHONES)
+    public List<SmartphoneWrapper> getUserSmartphones(@PathVariable int id) {
+        return userController.getUserSmartphones(id);
     }
     
     @RequestMapping(method = RequestMethod.GET)

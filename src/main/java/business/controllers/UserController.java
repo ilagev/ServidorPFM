@@ -1,10 +1,16 @@
 package business.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import business.wrappers.SmartphoneWrapper;
 import business.wrappers.UserWrapper;
+import data.daos.SmartphoneDao;
 import data.daos.UserDao;
+import data.entities.Smartphone;
 import data.entities.User;
 
 @Controller
@@ -15,6 +21,20 @@ public class UserController {
     @Autowired
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
+    }
+    
+    private SmartphoneController smartphoneController;
+    
+    @Autowired
+    public void setSmartphoneController(SmartphoneController smartphoneController) {
+        this.smartphoneController = smartphoneController;
+    }
+    
+    private SmartphoneDao smartphoneDao;
+    
+    @Autowired
+    public void setSmartphoneDao(SmartphoneDao smartphoneDao) {
+        this.smartphoneDao = smartphoneDao;
     }
 
     public UserWrapper getUser(String username) {
@@ -63,6 +83,19 @@ public class UserController {
         User user = userDao.findByNick(username);
         user.setPassword(newPassword);
         return this.getUserWrapper(userDao.save(user));
+    }
+
+    public UserWrapper getUser(int id) {
+        return this.getUserWrapper(userDao.findById(id));
+    }
+
+    public List<SmartphoneWrapper> getUserSmartphones(int id) {
+        List<SmartphoneWrapper> swl = new ArrayList<SmartphoneWrapper>();
+        List<Smartphone> smartphoneEntities = smartphoneDao.findByCreatorId(id);
+        for (Smartphone s : smartphoneEntities) {
+            swl.add(smartphoneController.getSmartphoneWrapper(s));
+        }
+        return swl;
     }
 
 }

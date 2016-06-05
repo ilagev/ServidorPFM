@@ -51,8 +51,7 @@ public class SmartphoneController {
         return swl;
     }
     
-    private SmartphoneWrapper getSmartphoneWrapper (Smartphone smartphoneEntity) {
-        System.out.println(smartphoneEntity.getCreator().getNick());
+    public SmartphoneWrapper getSmartphoneWrapper (Smartphone smartphoneEntity) {
         return new SmartphoneWrapper(
                 smartphoneEntity.getId(),
                 smartphoneEntity.getModelName(),

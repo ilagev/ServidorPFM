@@ -11,6 +11,9 @@ public class UserWrapper {
     private int level;
     private int karma;
     private String role;
+    private int smartphoneId;
+    private String smartphoneModelName;
+    private String smartphoneBrandName;
     
     public UserWrapper() {
         
@@ -74,7 +77,29 @@ public class UserWrapper {
         return "UserWrapper [id=" + id + ", nick=" + nick + ", password=" + password + ", mail=" + mail + ", level=" + level + ", karma="
                 + karma + ", role=" + role + "]";
     }
-    
-    
 
+    public int getSmartphoneId() {
+        return smartphoneId;
+    }
+
+    public void setSmartphoneId(int smartphoneId) {
+        this.smartphoneId = smartphoneId;
+    }
+
+    public String getSmartphoneModelName() {
+        return smartphoneModelName;
+    }
+
+    public void setSmartphoneModelName(String smartphoneModelName) {
+        this.smartphoneModelName = smartphoneModelName;
+    }
+
+    public String getSmartphoneBrandName() {
+        return smartphoneBrandName;
+    }
+
+    public void setSmartphoneBrandName(String smartphoneBrandName) {
+        this.smartphoneBrandName = smartphoneBrandName;
+    }
+    
 }

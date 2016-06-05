@@ -42,7 +42,7 @@ public class UserController {
     }
 
     private UserWrapper getUserWrapper(User user) {
-        return new UserWrapper(
+        UserWrapper uw = new UserWrapper(
             user.getId(),
             user.getNick(),
             user.getPassword(),
@@ -51,6 +51,12 @@ public class UserController {
             user.getKarma(),
             user.getRole()
         );
+        if (user.getSmartphone() != null) {
+            uw.setSmartphoneId(user.getSmartphone().getId());
+            uw.setSmartphoneBrandName(user.getSmartphone().getBrandName());
+            uw.setSmartphoneModelName(user.getSmartphone().getModelName());
+        }
+        return uw;
     }
     
     private User getUserEntity(UserWrapper userWrapper) {
@@ -96,6 +102,13 @@ public class UserController {
             swl.add(smartphoneController.getSmartphoneWrapper(s));
         }
         return swl;
+    }
+
+    public UserWrapper updateSmartphoneOwned(int id, String nick) {
+        User user = userDao.findByNick(nick);
+        user.setSmartphone(smartphoneDao.findById(id));
+        userDao.save(user);
+        return this.getUserWrapper(user);
     }
 
 }

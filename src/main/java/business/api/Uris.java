@@ -6,6 +6,8 @@ public class Uris {
 
     public static final String SMARTPHONES = "/smartphones";
     
+    public static final String SMARTPHONE = "/smartphone";
+    
     public static final String ID = "/{id}";
     
     public static final String TOKENS = "/tokens";

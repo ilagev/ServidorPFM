@@ -68,4 +68,9 @@ public class UserResource {
         return userController.updatePassword(activeUser.getUsername(), password.getNewp());
     }
     
+    @RequestMapping(method = RequestMethod.PUT, value = Uris.LOGGED_IN + Uris.SMARTPHONE)
+    public UserWrapper updatePassword(@RequestBody SmartphoneWrapper smartphone, @AuthenticationPrincipal User activeUser) {
+        return userController.updateSmartphoneOwned(smartphone.getId(), activeUser.getUsername());
+    }
+    
 }

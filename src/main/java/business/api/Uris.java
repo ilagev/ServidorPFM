@@ -17,5 +17,7 @@ public class Uris {
     public static final String LOGGED_IN = "/loggedin";
     
     public static final String PASSWORD = "/password";
+    
+    public static final String REVIEWS = "/reviews";
 
 }

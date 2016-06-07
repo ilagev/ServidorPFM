@@ -1,5 +1,6 @@
 package data.entities;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -28,6 +29,14 @@ public class Review {
         
     }
     
+    public Review(String text, float mark, Smartphone smartphone, User user) {
+        this.date = Calendar.getInstance().getTime();
+        this.text = text;
+        this.mark = mark;
+        this.smartphone = smartphone;
+        this.user = user;
+    }
+
     public int getId() {
         return id;
     }

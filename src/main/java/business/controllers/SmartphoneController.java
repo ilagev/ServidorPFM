@@ -6,9 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import business.wrappers.ReviewWrapper;
 import business.wrappers.SmartphoneWrapper;
+import data.daos.ReviewDao;
 import data.daos.SmartphoneDao;
 import data.daos.UserDao;
+import data.entities.Review;
 import data.entities.Smartphone;
 
 @Controller
@@ -26,6 +29,20 @@ public class SmartphoneController {
     @Autowired
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
+    }
+    
+    private ReviewDao reviewDao;
+    
+    @Autowired
+    public void setReviewDao(ReviewDao reviewDao) {
+        this.reviewDao = reviewDao;
+    }
+    
+    private ReviewController reviewController;
+    
+    @Autowired
+    public void setReviewController(ReviewController reviewController) {
+        this.reviewController = reviewController;
     }
     
     public SmartphoneWrapper create(SmartphoneWrapper smartphoneWrapper, String username) {
@@ -138,6 +155,15 @@ public class SmartphoneController {
 
     public boolean existsSmartphone(int id) {
         return this.smartphoneDao.findById(id) != null;
+    }
+
+    public List<ReviewWrapper> getReviews(int id) {
+        List<ReviewWrapper> rl = new ArrayList<ReviewWrapper>();
+        List<Review> reviews = reviewDao.findBySmartphoneId(id);
+        for (Review r : reviews) {
+            rl.add(reviewController.getReviewWrapper(r));
+        }
+        return rl;
     }
 
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import business.api.exceptions.AlreadyExistSmartphoneException;
 import business.api.exceptions.NotFoundSmartphoneException;
 import business.controllers.SmartphoneController;
+import business.wrappers.ReviewWrapper;
 import business.wrappers.SmartphoneWrapper;
 
 @RestController
@@ -68,6 +69,15 @@ public class SmartphoneResource {
     public void removeSmartphone(@PathVariable int id) throws NotFoundSmartphoneException {
         if (smartphoneController.existsSmartphone(id)) {
             smartphoneController.removeSmartphone(id);
+        } else {
+            throw new NotFoundSmartphoneException("No existe el smartphone con id = " + id);
+        }
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, value = Uris.ID + Uris.REVIEWS)
+    public List<ReviewWrapper> getReviews(@PathVariable int id)  throws NotFoundSmartphoneException {
+        if (smartphoneController.existsSmartphone(id)) {
+            return smartphoneController.getReviews(id);
         } else {
             throw new NotFoundSmartphoneException("No existe el smartphone con id = " + id);
         }

@@ -10,8 +10,10 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import config.ResourceNames;
+import data.daos.ReviewDao;
 import data.daos.SmartphoneDao;
 import data.daos.UserDao;
+import data.entities.Review;
 import data.entities.Role;
 import data.entities.Smartphone;
 import data.entities.User;
@@ -26,6 +28,9 @@ public class Populate {
     
     @Autowired
     private UserDao userDao;
+    
+    @Autowired
+    private ReviewDao reviewDao;
     
     @PostConstruct
     public void populate() {
@@ -81,6 +86,19 @@ public class Populate {
                                          134, 122.6, 75.4, 9.0, false, true, false);
         hp9.setCreator(admin);
         smartphoneDao.save(hp9);
+        
+        Review rhp9 = new Review("Gran smarphone, buena pantalla, mejor bateria, pero poca memoria RAM :(", 7, hp9, mod);
+        reviewDao.save(rhp9);
+        
+        Review rhtc9 = new Review("Asco de movil, esteticamente pesimo, HTC en sus ultimas... un desastre!!", 1, htc9, user);
+        reviewDao.save(rhtc9);
+        
+        Review rhtc9_2 = new Review("No entiendo tanta critica, este es un movil en MAYUSCULAS, procesador, memoria, sonido... Perfecto hoyga", 10, htc9, mod);
+        reviewDao.save(rhtc9_2);
+        
+        Review rhtc10 = new Review("ASI SI HTC, gran acabado, gran bateria, potencia a raudales... enhorabuena!!!", 9, htc10, admin);
+        reviewDao.save(rhtc10);
+        
     }
 
 }

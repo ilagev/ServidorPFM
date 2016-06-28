@@ -35,10 +35,14 @@ public class Populate {
     @PostConstruct
     public void populate() {
         User user = new User("pedro", "pedro", "pedro@pedro.com");
+        user.setKarma(95);
+        user.setLevel(9);
         user = this.userDao.save(user);
         
         User mod = new User("mod", "mod", "mod@mod.com");
         mod.setRole(Role.MODERATOR);
+        mod.setKarma(95);
+        mod.setLevel(49);
         mod = this.userDao.save(mod);
         
         User admin = new User("admin", "admin", "admin@admin.com");

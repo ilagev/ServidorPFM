@@ -12,10 +12,21 @@ import data.daos.ReviewDao;
 import data.daos.SmartphoneDao;
 import data.daos.UserDao;
 import data.entities.Review;
+import data.entities.Role;
 import data.entities.Smartphone;
+import data.entities.User;
 
 @Controller
 public class SmartphoneController {
+    
+    public static final int POST_STEP = 20;
+    public static final int EDIT_STEP = 10;
+    public static final int REVIEW_STEP = 5;
+    
+    public static final int MAX_KARMA = 100;
+    
+    public static final int BARRIER_MOD = 10;
+    public static final int BARRIER_ADMIN = 50;
     
     private SmartphoneDao smartphoneDao;
     
@@ -47,7 +58,10 @@ public class SmartphoneController {
     
     public SmartphoneWrapper create(SmartphoneWrapper smartphoneWrapper, String username) {
         Smartphone smartphoneEntity = this.getSmartphoneEntity(smartphoneWrapper);
-        smartphoneEntity.setCreator(userDao.findByNick(username));
+        User user = userDao.findByNick(username);
+        this.reward(user, POST_STEP);
+        userDao.save(user);
+        smartphoneEntity.setCreator(user);
         return this.getSmartphoneWrapper(smartphoneDao.save(smartphoneEntity));
     }
 
@@ -131,6 +145,10 @@ public class SmartphoneController {
         smartphoneEntity.setBluetooth(smartphoneWrapper.isBluetooth());
         
         this.smartphoneDao.save(smartphoneEntity);
+        
+        User user = smartphoneEntity.getCreator();
+        this.reward(user, EDIT_STEP);
+        userDao.save(user);
         return this.getSmartphoneWrapper(smartphoneEntity);
     }
 
@@ -164,6 +182,25 @@ public class SmartphoneController {
             rl.add(reviewController.getReviewWrapper(r));
         }
         return rl;
+    }
+    
+    public void reward (User user, int reward) {
+        int userKarma = user.getKarma();
+        int userLevel = user.getLevel();
+        
+        if (userKarma + reward > MAX_KARMA) { // next level
+            userLevel++;
+            user.setLevel(userLevel);
+            if (userLevel == BARRIER_MOD) {
+                user.setRole(Role.MODERATOR);
+            } else if (userLevel == BARRIER_ADMIN) {
+                user.setRole(Role.ADMIN);
+            }
+        }
+        userKarma += reward % MAX_KARMA;
+        
+        user.setKarma(userKarma);
+        user.setLevel(userLevel);
     }
 
 }

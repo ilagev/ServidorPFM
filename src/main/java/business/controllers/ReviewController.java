@@ -34,6 +34,13 @@ public class ReviewController {
     public void setReviewDao(ReviewDao reviewDao) {
         this.reviewDao = reviewDao;
     }
+    
+    private SmartphoneController smartphoneController;
+    
+    @Autowired
+    public void setSmartphoneController(SmartphoneController smartphoneController) {
+        this.smartphoneController = smartphoneController;
+    }
 
     public ReviewWrapper getReviewWrapper(Review r) {
         return new ReviewWrapper(
@@ -49,6 +56,8 @@ public class ReviewController {
 
     public ReviewWrapper create(ReviewWrapper review, String username) {
         User user = userDao.findByNick(username);
+        this.smartphoneController.reward(user, SmartphoneController.REVIEW_STEP);
+        userDao.save(user);
         Smartphone smartphone = smartphoneDao.findById(review.getSmartphoneId());
         Review reviewEntity = new Review(review.getText(), review.getMark(), smartphone, user);
         reviewEntity = reviewDao.save(reviewEntity);

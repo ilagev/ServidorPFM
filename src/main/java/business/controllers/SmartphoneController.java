@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 
 import business.wrappers.ReviewWrapper;
 import business.wrappers.SmartphoneWrapper;
@@ -16,6 +17,7 @@ import data.entities.Role;
 import data.entities.Smartphone;
 import data.entities.User;
 
+@Transactional
 @Controller
 public class SmartphoneController {
     
@@ -154,6 +156,12 @@ public class SmartphoneController {
 
     public void removeSmartphone(int id) {
         this.smartphoneDao.delete(smartphoneDao.findById(id));
+        reviewDao.deleteReviewsForSmartphone(id);
+        List<User> owners = userDao.findBySmartphoneOwnedId(id);
+        for (User user : owners) {
+            user.setSmartphone(null);
+            userDao.save(user);
+        }
     }
 
     public boolean existsSmartphone(String brandName, String modelName, Integer id) {
